@@ -80,8 +80,9 @@ const App = () => {
           onChangeText={(text) => onChangeText(text)}
           value={inputValue}
         />
+        <Text style={styles.value}>{inputValue}</Text>
         <View style={styles.buttonWrap}>
-          <Text style={{color: 'white'}}>Quick test buttons</Text>
+        <Text style={{color: 'white'}}>Quick test buttons</Text>
           {buttons.map((button) => (
             <Button
               key={button.title}
@@ -128,6 +129,11 @@ const styles = StyleSheet.create({
     fontSize: 30,
     paddingVertical: 10,
     textAlign: 'center',
+  },
+  value: {
+    color: 'white',
+    paddingTop: 25,
+    textAlign: 'center'
   },
   buttonWrap: {
     flex: 1,
