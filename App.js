@@ -49,6 +49,7 @@ const App = () => {
       setBackgroundColor(color);
     }else{
       setBackgroundColor('#333')
+      checkRegex(inputValue)
     }
    
   }, [regexValid, safetyOn]);
@@ -66,13 +67,12 @@ const App = () => {
       } catch (e) {
         isValid = false;
       }
+      setRegexValid(isValid);
   
     }else{
-     
       new RegExp(regex);
-
     }
-    setRegexValid(isValid);
+    
    
   };
 
