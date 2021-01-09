@@ -15,12 +15,14 @@ import {
   StatusBar,
   TextInput,
   TouchableOpacity,
+  Switch
 } from 'react-native';
 
 const App = () => {
   const [backgroundColor, setBackgroundColor] = useState('green');
   const [inputValue, setInputValue] = useState('');
   const [regexValid, setRegexValid] = useState(true);
+  const [safetyOn, setSaftyOn] = useState(true);
   const [buttons] = useState([
     {
       title: 'phone number',
@@ -45,15 +47,23 @@ const App = () => {
     setBackgroundColor(color);
   }, [regexValid]);
 
+  const toggleSwitch = () => setSaftyOn(previousState => !previousState);
+
+
   const checkRegex = (regex) => {
     let isValid = true;
-    try {
+    if(safetyOn) {
+      try {
+        new RegExp(regex);
+      } catch (e) {
+        isValid = false;
+      }
+  
+      setRegexValid(isValid);
+    }else{
       new RegExp(regex);
-    } catch (e) {
-      isValid = false;
     }
-
-    setRegexValid(isValid);
+   
   };
 
   const sendRegexToInput = (regex) => {
@@ -74,6 +84,17 @@ const App = () => {
         <Text style={styles.text}>
           Regex is {regexValid ? 'valid' : 'not valid'}
         </Text>
+        <View style={styles.safetySwitchContainer}>
+        <Switch
+        trackColor={{ false: "#767577", true: "#81b0ff" }}
+        thumbColor={safetyOn ? "#f5dd4b" : "#f4f3f4"}
+        ios_backgroundColor="#3e3e3e"
+        onValueChange={toggleSwitch}
+        value={safetyOn}
+      />
+          <Text style={{color: '#fff'}}>Safety Switch</Text>
+        </View>
+       
         <TextInput
           placeholder="Enter regex"
           style={styles.input}
@@ -113,6 +134,12 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 20,
     paddingVertical: 40,
+  },
+  safetySwitchContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20
   },
   input: {
     height: 60,
