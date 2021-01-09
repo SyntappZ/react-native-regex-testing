@@ -44,9 +44,16 @@ const App = () => {
   ]);
 
   useEffect(() => {
-    const color = regexValid ? 'green' : 'red';
-    setBackgroundColor(color);
-  }, [regexValid]);
+    if(safetyOn) {
+      const color = regexValid ? 'green' : 'red';
+      setBackgroundColor(color);
+    }else{
+      setBackgroundColor('#333')
+    }
+   
+  }, [regexValid, safetyOn]);
+
+
 
   const toggleSwitch = () => setSaftyOn(previousState => !previousState);
 
@@ -60,10 +67,12 @@ const App = () => {
         isValid = false;
       }
   
-      setRegexValid(isValid);
     }else{
+     
       new RegExp(regex);
+
     }
+    setRegexValid(isValid);
    
   };
 
