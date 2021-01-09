@@ -15,7 +15,7 @@ import {
   StatusBar,
   TextInput,
   TouchableOpacity,
-  Switch
+  Switch,
 } from 'react-native';
 
 const App = () => {
@@ -24,7 +24,6 @@ const App = () => {
   const [regexValid, setRegexValid] = useState(true);
   const [safetyOn, setSaftyOn] = useState(true);
   const [buttons] = useState([
-   
     {title: 'positive lookbehind', regex: '(?<=a)b'},
     {title: 'negative lookbehind', regex: '(?<!a)b'},
     {title: 'positive lookahead', regex: 'x(?=y)'},
@@ -38,42 +37,36 @@ const App = () => {
     },
     {
       title: 'phone number',
-      regex: '^(?:(?:\\(?(?:00|\\+)([1-4]\\\\d\\\\d|[1-9]\\\\d?)\\)?)?[\\-\\.\\ \\\\\\/]?)?((?:\\(?\\d{1,}\\)?[\\-\\.\\ \\\\\\/]?){0,})(?:[\\-\\.\\ \\\\\\/]?(?:#|ext\\.?|extension|x)[\\-\\.\\ \\\\\\/]?(\\d+))?$',
+      regex:
+        '^(?:(?:\\(?(?:00|\\+)([1-4]\\\\d\\\\d|[1-9]\\\\d?)\\)?)?[\\-\\.\\ \\\\\\/]?)?((?:\\(?\\d{1,}\\)?[\\-\\.\\ \\\\\\/]?){0,})(?:[\\-\\.\\ \\\\\\/]?(?:#|ext\\.?|extension|x)[\\-\\.\\ \\\\\\/]?(\\d+))?$',
     },
     {title: 'zip code', regex: '^[0-9]{5}(?:-[0-9]{4})?$'},
   ]);
 
   useEffect(() => {
-    if(safetyOn) {
+    if (safetyOn) {
       const color = regexValid ? 'green' : 'red';
       setBackgroundColor(color);
-    }else{
-      setBackgroundColor('#333')
-      checkRegex(inputValue)
+    } else {
+      setBackgroundColor('#333');
+      checkRegex(inputValue);
     }
-   
   }, [regexValid, safetyOn]);
 
-
-
-  const toggleSwitch = () => setSaftyOn(previousState => !previousState);
-
+  const toggleSwitch = () => setSaftyOn((previousState) => !previousState);
 
   const checkRegex = (regex) => {
     let isValid = true;
-    if(safetyOn) {
+    if (safetyOn) {
       try {
         new RegExp(regex);
       } catch (e) {
         isValid = false;
       }
       setRegexValid(isValid);
-  
-    }else{
+    } else {
       new RegExp(regex);
     }
-    
-   
   };
 
   const sendRegexToInput = (regex) => {
@@ -95,16 +88,18 @@ const App = () => {
           Regex is {regexValid ? 'valid' : 'not valid'}
         </Text>
         <View style={styles.safetySwitchContainer}>
-        <Switch
-        trackColor={{ false: "#767577", true: "#81b0ff" }}
-        thumbColor={safetyOn ? "#f5dd4b" : "#f4f3f4"}
-        ios_backgroundColor="#3e3e3e"
-        onValueChange={toggleSwitch}
-        value={safetyOn}
-      />
-          <Text style={{color: '#fff'}}>Safety Switch {safetyOn ? 'on' : 'off'}</Text>
+          <Switch
+            trackColor={{false: '#767577', true: '#81b0ff'}}
+            thumbColor={safetyOn ? '#f5dd4b' : '#f4f3f4'}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={toggleSwitch}
+            value={safetyOn}
+          />
+          <Text style={{color: '#fff'}}>
+            Safety Switch {safetyOn ? 'on' : 'off'}
+          </Text>
         </View>
-       
+
         <TextInput
           placeholder="Enter regex"
           style={styles.input}
@@ -113,7 +108,7 @@ const App = () => {
         />
         <Text style={styles.value}>{inputValue}</Text>
         <View style={styles.buttonWrap}>
-        <Text style={{color: 'white'}}>Quick test buttons</Text>
+          <Text style={{color: 'white'}}>Quick test buttons</Text>
           {buttons.map((button) => (
             <Button
               key={button.title}
@@ -149,7 +144,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20
+    padding: 20,
   },
   input: {
     height: 60,
@@ -170,7 +165,7 @@ const styles = StyleSheet.create({
   value: {
     color: 'white',
     paddingTop: 25,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   buttonWrap: {
     flex: 1,
