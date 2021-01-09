@@ -24,10 +24,7 @@ const App = () => {
   const [regexValid, setRegexValid] = useState(true);
   const [safetyOn, setSaftyOn] = useState(true);
   const [buttons] = useState([
-    {
-      title: 'phone number',
-      regex: '^(?([0-9]{3}))?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$',
-    },
+   
     {title: 'positive lookbehind', regex: '(?<=a)b'},
     {title: 'negative lookbehind', regex: '(?<!a)b'},
     {title: 'positive lookahead', regex: 'x(?=y)'},
@@ -38,6 +35,10 @@ const App = () => {
       title: 'date',
       regex:
         '^(0?[1-9]|1[012])[- /.](0?[1-9]|[12][0-9]|3[01])[- /.](19|20)?[0-9]{2}$',
+    },
+    {
+      title: 'phone number',
+      regex: '^(?:(?:\\(?(?:00|\\+)([1-4]\\\\d\\\\d|[1-9]\\\\d?)\\)?)?[\\-\\.\\ \\\\\\/]?)?((?:\\(?\\d{1,}\\)?[\\-\\.\\ \\\\\\/]?){0,})(?:[\\-\\.\\ \\\\\\/]?(?:#|ext\\.?|extension|x)[\\-\\.\\ \\\\\\/]?(\\d+))?$',
     },
     {title: 'zip code', regex: '^[0-9]{5}(?:-[0-9]{4})?$'},
   ]);
@@ -92,7 +93,7 @@ const App = () => {
         onValueChange={toggleSwitch}
         value={safetyOn}
       />
-          <Text style={{color: '#fff'}}>Safety Switch</Text>
+          <Text style={{color: '#fff'}}>Safety Switch {safetyOn ? 'on' : 'off'}</Text>
         </View>
        
         <TextInput
